@@ -6,7 +6,9 @@ import colorsys
 import numpy as np
 import tensorflow as tf
 from yolov3.configs import *
+from yolov3.yolov3 import *
 from tensorflow.python.saved_model import tag_constants
+
 
 def load_yolo_weights(model, weights_file):
     tf.keras.backend.clear_session() # used to reset layer names
@@ -67,8 +69,6 @@ def Load_Yolo_model():
         except RuntimeError: pass
         
     if YOLO_FRAMEWORK == "tf": # TensorFlow detection
-        if YOLO_TYPE == "yolov4":
-            Darknet_weights = YOLO_V4_TINY_WEIGHTS if TRAIN_YOLO_TINY else YOLO_V4_WEIGHTS
         if YOLO_TYPE == "yolov3":
             Darknet_weights = YOLO_V3_TINY_WEIGHTS if TRAIN_YOLO_TINY else YOLO_V3_WEIGHTS
             
@@ -86,13 +86,7 @@ def Load_Yolo_model():
 
     return yolo
 
-def read_class_names(class_file_name):
-    # loads class name from a file
-    names = {}
-    with open(class_file_name, 'r') as data:
-        for ID, name in enumerate(data):
-            names[ID] = name.strip('\n')
-    return names
+
 
 def image_preprocess(image, target_size, gt_boxes=None):
     ih, iw    = target_size
