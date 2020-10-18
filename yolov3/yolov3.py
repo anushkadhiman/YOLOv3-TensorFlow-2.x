@@ -2,11 +2,19 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.layers import Conv2D, Input, LeakyReLU, ZeroPadding2D, BatchNormalization, MaxPool2D
 from tensorflow.keras.regularizers import l2
-from yolov3.utils import read_class_names
 from yolov3.configs import *
 
 STRIDES         = np.array(YOLO_STRIDES)
 ANCHORS         = (np.array(YOLO_ANCHORS).T/STRIDES).T
+
+
+def read_class_names(class_file_name):
+    # loads class name from a file
+    names = {}
+    with open(class_file_name, 'r') as data:
+        for ID, name in enumerate(data):
+            names[ID] = name.strip('\n')
+    return names
 
 class BatchNormalization(BatchNormalization):
     # "Frozen state" and "inference mode" are two separate concepts.
@@ -354,3 +362,23 @@ def compute_loss(pred, conv, label, bboxes, i=0, CLASSES=YOLO_COCO_CLASSES):
     prob_loss = tf.reduce_mean(tf.reduce_sum(prob_loss, axis=[1,2,3,4]))
 
     return giou_loss, conf_loss, prob_loss
+
+def Create_Yolo(input_size=416, channels=3, training=False, CLASSES=YOLO_COCO_CLASSES):
+    NUM_CLASS = len(read_class_names(CLASSES))
+    input_layer  = Input([input_size, input_size, channels])
+
+    if TRAIN_YOLO_TINY:
+        if YOLO_TYPE == "yolov3":
+            conv_tensors = YOLOv3_tiny(input_layer, NUM_CLASS)
+    else:
+        if YOLO_TYPE == "yolov3":
+            conv_tensors = YOLOv3(input_layer, NUM_CLASS)
+
+    output_tensors = []
+    for i, conv_tensor in enumerate(conv_tensors):
+        pred_tensor = decode(conv_tensor, NUM_CLASS, i)
+        if training: output_tensors.append(conv_tensor)
+        output_tensors.append(pred_tensor)
+
+    Yolo = tf.keras.Model(input_layer, output_tensors)
+    return Yolo
