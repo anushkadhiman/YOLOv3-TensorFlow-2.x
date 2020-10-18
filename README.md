@@ -37,10 +37,9 @@ python detection_demo.py
 ![Alt text](video.gif?raw=true "video")
 
 ### Detection by Custom Trained model
-
+![Alt text](video2.gif?raw=true "video")
 
 ## References
-
 
 1. https://github.com/pjreddie/darknet	
 - Official YOLOv3 implementation
