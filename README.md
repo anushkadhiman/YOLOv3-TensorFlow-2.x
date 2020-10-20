@@ -6,8 +6,8 @@ YOLOv3 implementation in TensorFlow 2 version.
 First, clone or download this GitHub repository. Install requirements and download pretrained weights:
 
 ```
-git clone https://github.com/pythonlessons/TensorFlow-2.x-YOLOv3.git
-cd TensorFlow-2.x-YOLOv3
+git clone https://github.com/anushkadhiman/YOLOv3-TensorFlow-2.x.git
+cd YOLOv3-TensorFlow-2.x
 ````
 
 ```
