@@ -1,5 +1,5 @@
 # YOLOv3-TensorFlow-2.x
-YOLOv3 implementation in TensorFlow 2 version.
+YOLOv3 implementation in TensorFlow 2 version. My Blog post https://medium.com/analytics-vidhya/yolov3-object-detection-in-tensorflow-2-x-8a1a104c46a8
 
 ## Installation
 
