@@ -48,4 +48,6 @@ python detection_demo.py
 3. https://github.com/pythonlessons/TensorFlow-2.x-YOLOv3 
 - Models, loss functions
 
+4. https://pylessons.com/ — Rokas Balsys
+
 
